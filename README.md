@@ -32,12 +32,7 @@ Customer retention is critical in fintech. This project focuses on:
 
 ---
 
-## 🛠️ Feature Engineering
 
-### Profit Proxy
-```python
-df['Avg_Utilization_Ratio'] = df['Total_Revolving_Bal'] / df['Credit_Limit']
-df['Profit_Proxy'] = (df['Credit_Limit'] * df['Avg_Utilization_Ratio']) - (0.02 * df['Total_Trans_Amt'])
 
 📈 Methodology
 Data Preprocessing
@@ -58,7 +53,7 @@ Statistical tests:
 z-test (churn difference)
 Welch’s t-test (profit difference)
 
-Key result:
+Key results:
 
 Churn reduction: 3.10% (p < 0.001)
 Profit uplift: not significant (p ≈ 0.84)
@@ -86,17 +81,8 @@ Top churn drivers:
 Transaction count
 Months inactive
 Contact frequency
-🔑 Key Results
-Metric	Value
-Churn Reduction	3.10%
-Incremental RAPS	1,578.52
-ROI	-0.79
-Avg RAPS uplift	10.55
-Best Segment	Revolvers (+0.27 RAPS)
-Segment Insights
-High Spender: +0.03 RAPS
-Revolver: +0.27 RAPS
-Transactor: +0.16 RAPS
+
+
 📌 Business Insights
 Revolvers are the most responsive segment to cashback
 Broad-based cashback campaigns are not profitable
@@ -107,6 +93,8 @@ FinRetention-AI/
 ├── FinRetention_AI.ipynb
 ├── data/
 └── README.md
+
+
 🧰 Dependencies
 Python 3.8+
 pandas, numpy
