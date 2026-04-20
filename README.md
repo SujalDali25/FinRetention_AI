@@ -40,8 +40,6 @@ Encoding categorical variables
 Train-test split (80/20)
 Predictive Modeling
 Model	Target	Performance
-Logistic Regression	Churn	ROC-AUC = 0.99997
-XGBoost Regressor	Profit Proxy	R² = 0.9998, RMSE = 11.11
 Intervention Simulation
 Cashback incentive applied to treatment group
 10% churn reduction simulated for high-value users
