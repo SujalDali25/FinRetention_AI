@@ -1,74 +1,117 @@
-── FinRetention_AI.ipynb  # Main analysis notebook
-├── data/                  # Placeholder for raw/processed datasets
-└── README.md              # Project documentation
-
-
-## 📝 Usage
-1. Clone the repository: `git clone https://github.com/yourusername/FinRetention-AI.git`
-2. Install dependencies: `pip install pandas numpy scikit-learn xgboost matplotlib seaborn`
-3. Run the notebook in Jupyter or Google Colab to regenerate insights.
-
-## 🤝 Contact
-Feel free to reach out for collaboration or questions regarding the churn modeling framework.
-
-
-├── FinRetention_AI.ipynb  # Main analysis notebook
-├── data/                  # Placeholder for raw/processed datasets
-└── README.md              # Project documentation
-
-
-## 📝 Usage
-1. Clone the repository: `git clone https://github.com/yourusername/FinRetention-AI.git`
-2. Install dependencies: `pip install pandas numpy scikit-learn xgboost matplotlib seaborn`
-3. Run the notebook in Jupyter or Google Colab to regenerate insights.
-
-## 🤝 Contact
-Feel free to reach out for collaboration or questions regarding the churn modeling framework.
-"""
-
-print(readme_content)
-
-Your README file is ready. It captures the technical depth and business impact of your analysis, bridging your data engineering work with the product-led retention strategy you are focusing on.
-
-You can copy the code block below directly into a README.md file in your repository.
-
-Markdown
 # FinRetention-AI: Customer Churn Prediction & Retention Optimization
 
-This project leverages Machine Learning to predict customer churn and optimize retention strategies within the financial services sector. By analyzing transaction patterns and user engagement, this notebook evaluates the impact of targeted retention campaigns (e.g., cashback programs) across distinct customer segments.
+This project leverages Machine Learning to predict customer churn and optimize retention strategies in the financial services sector. By analyzing transaction patterns, credit usage, and customer engagement, the system evaluates the impact of targeted retention campaigns (e.g., cashback programs) across distinct customer segments. It provides an end-to-end pipeline from data preprocessing to A/B testing simulation and ROI analysis.
+
+---
 
 ## 🚀 Project Overview
-In the highly competitive fintech landscape, customer retention is critical. This project focuses on:
-- **Predicting Churn:** Utilizing classification models (XGBoost, Logistic Regression) to identify at-risk customers.
-- **Customer Segmentation:** Classifying users into groups such as *High Spenders*, *Revolvers*, and *Transactors* to tailor communication.
-- **Profitability Modeling:** Calculating "Revenue After Profit Simulation" (RAPS) to measure the effectiveness of retention interventions.
-- **Actionable Insights:** Evaluating the ROI of marketing campaigns (e.g., cashback) on specific user behaviors.
 
-## 🛠 Tech Stack
-- **Languages:** Python
-- **Libraries:**
-  - `pandas`, `numpy`: Data manipulation and feature engineering.
-  - `scikit-learn`: Predictive modeling and pre-processing.
-  - `xgboost`: Advanced gradient boosting for churn prediction.
-  - `matplotlib`, `seaborn`: Visualization of churn trends and segment impact.
+Customer retention is critical in fintech. This project focuses on:
 
-## 📊 Methodology
-1. **Data Preprocessing:** Cleaning transaction datasets (2.7M+ records) and encoding categorical variables.
-2. **Predictive Modeling:** Training classifiers to output churn probability scores.
-3. **Segmentation Strategy:** Applying behavioral clustering to isolate high-value segments.
-4. **Campaign Simulation:** Evaluating the *Delta_RAPS* (the change in revenue after accounting for campaign costs) to determine if a retention effort is profitable or net-negative.
+- **Churn Prediction** – Logistic Regression and XGBoost to identify at-risk customers  
+- **Profitability Modeling** – Customer Lifetime Value (CLV) and profit proxy creation  
+- **Customer Segmentation** – High Spenders, Revolvers, Transactors  
+- **Intervention Simulation** – Cashback campaign reducing churn probability by 10% for high-value users  
+- **A/B Testing Framework** – Control vs treatment randomization with statistical testing  
+- **Engagement Metrics** – Funnel analysis, DAU/MAU stickiness, cohort retention  
+- **ROI Analysis** – Incremental RAPS and profitability evaluation  
+- **Model Interpretability** – SHAP-based explanation of churn drivers  
 
-## 📈 Key Insights
-Based on the current analysis, the system evaluates the success of campaigns by comparing churn rates against revenue delta. 
-- *Example Analysis:* We track how a cashback campaign influences behavior in different segments, identifying where retention efforts yield the highest ROI versus where they might result in profit leakage.
+---
 
-## 📁 Repository Structure
-├── FinRetention_AI.ipynb  # Main analysis notebook
-├── data/                  # Placeholder for raw/processed datasets
-└── README.md              # Project documentation
+## 📊 Dataset
 
+**BankChurners.csv (synthetic banking dataset)**
 
-## 📝 Usage
-1. Clone the repository: `git clone https://github.com/yourusername/FinRetention-AI.git`
-2. Install dependencies: `pip install pandas numpy scikit-learn xgboost matplotlib seaborn`
-3. Run the notebook in Jupyter or Google Colab to regenerate insights.
+| Category | Features |
+|----------|----------|
+| Demographics | Gender, Education, Marital Status, Income |
+| Credit Usage | Credit Limit, Revolving Balance, Transaction Amount, Transaction Count |
+| Behavior | Months on book, Inactivity, Contacts |
+| Target | Attrited Customer (churn) |
+
+---
+
+## 🛠️ Feature Engineering
+
+### Profit Proxy
+```python
+df['Avg_Utilization_Ratio'] = df['Total_Revolving_Bal'] / df['Credit_Limit']
+df['Profit_Proxy'] = (df['Credit_Limit'] * df['Avg_Utilization_Ratio']) - (0.02 * df['Total_Trans_Amt'])
+
+📈 Methodology
+Data Preprocessing
+Encoding categorical variables
+Train-test split (80/20)
+Predictive Modeling
+Model	Target	Performance
+Logistic Regression	Churn	ROC-AUC = 0.99997
+XGBoost Regressor	Profit Proxy	R² = 0.9998, RMSE = 11.11
+Intervention Simulation
+Cashback incentive applied to treatment group
+10% churn reduction simulated for high-value users
+Targeted using top RAPS quartile
+A/B Testing
+Stratified random sampling
+Control vs Treatment groups
+Statistical tests:
+z-test (churn difference)
+Welch’s t-test (profit difference)
+
+Key result:
+
+Churn reduction: 3.10% (p < 0.001)
+Profit uplift: not significant (p ≈ 0.84)
+Funnel Analysis
+
+Stages:
+
+Active
+Transacted
+Repeat
+Loyal
+
+Metrics:
+
+DAU/MAU: 0.03–0.04
+Cohort retention analysis performed
+ROI Analysis
+roi = (total_incremental - cost) / cost
+Cost per user: 50 units
+Result: Negative ROI due to high intervention cost
+SHAP Interpretability
+
+Top churn drivers:
+
+Transaction count
+Months inactive
+Contact frequency
+🔑 Key Results
+Metric	Value
+Churn Reduction	3.10%
+Incremental RAPS	1,578.52
+ROI	-0.79
+Avg RAPS uplift	10.55
+Best Segment	Revolvers (+0.27 RAPS)
+Segment Insights
+High Spender: +0.03 RAPS
+Revolver: +0.27 RAPS
+Transactor: +0.16 RAPS
+📌 Business Insights
+Revolvers are the most responsive segment to cashback
+Broad-based cashback campaigns are not profitable
+Targeted retention improves ROI significantly
+Cost efficiency is the primary constraint in scaling interventions
+📁 Repository Structure
+FinRetention-AI/
+├── FinRetention_AI.ipynb
+├── data/
+└── README.md
+🧰 Dependencies
+Python 3.8+
+pandas, numpy
+scikit-learn
+xgboost
+shap
+scipy, statsmodels
+matplotlib, seaborn, plotly
